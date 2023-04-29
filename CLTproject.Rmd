@@ -87,3 +87,28 @@ print(paste('mean = ', mean(my1000$k4),' sd = ',sd(my1000$k4)))
 ### In this case the stdev was cut in half because the sample size was four. This is what the central limit theorem says. There are also 5 peaks. They go from FFFF,to FFFM, to FFMM to FMMM and finally MMMM.
 
 # Now finish by adding blocks with numb being 9, then 16, 25, and 36. be sure to mention how the standard deviation progresses as the sample size changes,
+
+```{r}
+numb = 9
+Hdata = Homers_data[sample(1:1000,size=numb*1000, replace=T),"kkardashtemp"]
+mdata  <-matrix(Hdata,nrow=1000,ncol=numb)
+x.avg <- apply(mdata,1,mean)
+my1000$k9 = x.avg
+
+
+p <- ggplot(my1000, aes(x=k9),col=sex) + 
+  geom_density() +
+
+# Add mean line
+ geom_vline(aes(xintercept=mean(k9)),
+            color="blue", linetype="dashed", size=1)
+p + ggtitle("n = 9") +
+  xlab("temperature") + ylab(" density")
+
+print(paste('mean = ', mean(my1000$k9),' sd = ',sd(my1000$k9)))
+
+```
+
+For this graph, we increased the sample size to 9. The graph looks somewhat unimodal.In the previous graphs, we started off with a bimodal graph, a trimodal graph, and then the last graph showed five spikes. The central limit theorem basically states when the sample size reaches 30 or higher, the results should look like a normal distribution. The standard deviation for this graph is `r sd(my1000$k9)`.
+
+
