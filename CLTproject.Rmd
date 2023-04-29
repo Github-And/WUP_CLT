@@ -111,4 +111,24 @@ print(paste('mean = ', mean(my1000$k9),' sd = ',sd(my1000$k9)))
 
 For this graph, we increased the sample size to 9. The graph looks somewhat unimodal.In the previous graphs, we started off with a bimodal graph, a trimodal graph, and then the last graph showed five spikes. The central limit theorem basically states when the sample size reaches 30 or higher, the results should look like a normal distribution. The standard deviation for this graph is `r sd(my1000$k9)`.
 
+```{r}
+numb = 16
+Hdata = Homers_data[sample(1:1000,size=numb*1000, replace=T),"kkardashtemp"]
+mdata  <-matrix(Hdata,nrow=1000,ncol=numb)
+x.avg <- apply(mdata,1,mean)
+my1000$k16 = x.avg
 
+
+p <- ggplot(my1000, aes(x=k16),col=sex) + 
+  geom_density() +
+
+# Add mean line
+ geom_vline(aes(xintercept=mean(k16)),
+            color="blue", linetype="dashed", size=1)
+p + ggtitle("n = 16") +
+  xlab("temperature") + ylab(" density")
+
+print(paste('mean = ', mean(my1000$k16),' sd = ',sd(my1000$k16)))
+
+```
+This graph looks a lot more unimodal compared to the sample size of 9 graph, but still some tiny bumps near/on the middle of the graph. This graph has a sample size of 16 and the standard deviation for this is `r sd(my1000$k16)`. The standard deviation decreased compared to the sample size of 9 data.
