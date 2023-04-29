@@ -131,4 +131,28 @@ p + ggtitle("n = 16") +
 print(paste('mean = ', mean(my1000$k16),' sd = ',sd(my1000$k16)))
 
 ```
-This graph looks a lot more unimodal compared to the sample size of 9 graph, but still some tiny bumps near/on the middle of the graph. This graph has a sample size of 16 and the standard deviation for this is `r sd(my1000$k16)`. The standard deviation decreased compared to the sample size of 9 data.
+This graph looks a lot more unimodal compared to the sample size of 9 graph, but still some tiny bumps near/on the middle of the graph. This graph has a sample size of 16 and the standard deviation for this is `r sd(my1000$k16)`. The standard deviation is lower than the sample size of 9 data.
+
+```{r}
+numb = 25
+Hdata = Homers_data[sample(1:1000,size=numb*1000, replace=T),"kkardashtemp"]
+mdata  <-matrix(Hdata,nrow=1000,ncol=numb)
+x.avg <- apply(mdata,1,mean)
+my1000$k25 = x.avg
+
+
+p <- ggplot(my1000, aes(x=k25),col=sex) + 
+  geom_density() +
+
+# Add mean line
+ geom_vline(aes(xintercept=mean(k25)),
+            color="blue", linetype="dashed", size=1)
+p + ggtitle("n = 25") +
+  xlab("temperature") + ylab(" density")
+
+print(paste('mean = ', mean(my1000$k25),' sd = ',sd(my1000$k25)))
+
+```
+Once again the graph looks quite unimodal, but not exactly. Still some bumps on the curves, but it's somewhat smoother than the previous graphs. This graph has a sample size of 25 and the standard deviation for this is `r sd(my1000$k25)`. The standard deviation is lower than the sample size of 16 data.
+
+
